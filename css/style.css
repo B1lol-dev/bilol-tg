@@ -84,6 +84,7 @@ body{
     -moz-user-drag: none;
     -o-user-drag: none;
     user-drag: none;
+    transform: scale(120%);
 
     &:active{
         transform: scale(95%);
