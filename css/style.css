@@ -87,7 +87,7 @@ body{
     transform: scale(120%);
 
     &:active{
-        transform: scale(95%);
+        transform: scale(115%);
         box-shadow: 0 0 60px 10px white;
     }
 }
