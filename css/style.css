@@ -1,0 +1,232 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: cursive;
+}
+
+body{
+    background: black;
+}
+
+.container {
+	max-width: 390px;;
+    background: #000;
+    border: 1px solid transparent;
+}
+
+
+.bonus_road_wrapper{
+    /* border: 1px solid white; */
+    height: 50px;
+    width: 250px;
+    margin-left: 100px;
+    margin-top: 40px;
+    position: absolute;
+}
+
+.bonus_info{
+    height: 50px;
+    border: 1px solid white;
+    position: absolute;
+    border-radius: 8px;
+    width: 60px;
+    left: -80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bonus_info i{
+    color: white;
+    font-size: 30px;
+}
+
+.bonus_black{
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 8px;
+    width: 250px;
+    height: 20px;
+}
+
+#bonus_road{
+    height: 18px;
+    width: 200px;
+    background-color: lime;
+    border-radius: 8px;
+}
+
+.bonus_p{
+    color: white;
+    text-align: center;
+    user-select: none;
+}
+
+
+
+
+
+#main_coin{
+    border-radius: 50%;
+    height: 200px;
+    position: absolute;
+    margin-inline: 95px;
+    box-shadow: 0 0 50px 10px white;
+    /* margin-top: 195px; */
+    top: 235px;
+    user-select: none; /* Отключает выделение текста */
+    pointer-events: auto; /* Позволяет взаимодействовать с элементом */
+    z-index: 1;
+    /* Предотвращает перетаскивание элемента */
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+
+    &:active{
+        transform: scale(95%);
+        box-shadow: 0 0 60px 10px white;
+    }
+}
+
+
+
+/* Стили для анимации всплывающего текста */
+@keyframes moveUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
+
+.pop-up-text {
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    pointer-events: none; /* чтобы текст не мешал взаимодействию с другими элементами */
+    white-space: nowrap;
+    z-index: 2;
+    animation: moveUp 1s forwards;
+    -webkit-text-stroke: 0.5px black;
+}
+
+
+
+
+#count{
+    position: absolute;
+    bottom: 100px;
+    left: 50px;
+    color: white;
+    user-select: none;
+}
+
+#coin_number{
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    user-select: none;
+    margin-top: 100px;
+}
+
+.bottom_bar{
+    height: 90px;
+    position: absolute;
+    bottom: 5px;
+    width: 370px;
+    margin-left: 5px;
+    /* border: 1px solid gray; */
+    display: inline-flex;
+    transform: scale(80%);
+}
+
+.bottom_bar div{
+    border: 1px solid white;
+    height: 100%;
+    width: calc(370px / 3);
+    border-radius: 8px;
+    margin-inline: 1px;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.bottom_bar div i{
+    position: absolute;
+    font-size: 40px;
+    margin-top: 10px;
+}
+
+.bottom_bar div p{
+    margin-top: 64px;
+    user-select: none;
+}
+
+
+
+#user{
+    position: absolute;
+    display: inline-flex;
+    pointer-events: none;
+}
+
+#user_name{
+    color: white;
+    font-size: 20px;
+    user-select: none;
+}
+
+#user_img{
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    margin: 3.5px;
+    border: 1px solid white;
+    user-select: none;
+}
+
+
+
+
+#ref_open{
+    height: 100%;
+    position: absolute;
+    bottom: 95px;
+    background: black;
+    z-index: 9;
+    width: 390px;
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#ref_open h1{
+    color: white;
+}
+
+
+
+
+#earn_open{
+    height: 100%;
+    position: absolute;
+    bottom: 95px;
+    background: black;
+    z-index: 9;
+    width: 390px;
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#earn_open h1{
+    color: white;
+}
