@@ -5,7 +5,7 @@ let coin_number = document.getElementById('coin_number');
 
 let maxCountSpan = 1000; // Изначальное значение, можно изменить
 
-let current_number = 10;
+let current_number = 1;
 let restore_interval = 1000; // Интервал восстановления (1 секунда)
 let restore_amount = 1; // Количество восстановления каждую секунду
 
