@@ -215,5 +215,28 @@ setInterval(restoreCount, restore_interval);
 // Загрузка данных из localStorage при загрузке страницы
 loadFromLocalStorage();
 
-let user_name = document.getElementById('user_name');
-user_name.innerText = `${tg.initDataUnsafe.user.first_name}`;
+// let user_name = document.getElementById('user_name');
+// user_name.innerText = `${tg.initDataUnsafe.user.first_name}`;
+
+// Инициализация Telegram Web Apps API
+const tg = window.Telegram.WebApp;
+
+// Убедитесь, что Telegram Web Apps API загружен
+if (tg) {
+    tg.ready(); // Готовим API к использованию
+
+    // Получаем данные пользователя и обновляем элемент
+    const user_name = document.getElementById('user_name');
+    const user_img = document.getElementById('user_img');
+    
+    // Убедитесь, что пользовательский объект доступен
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        user_name.innerText = tg.initDataUnsafe.user.first_name;
+        // Допустим, что у вас есть URL аватара пользователя
+        // user_img.src = tg.initDataUnsafe.user.photo_url || './img/default_user.jpg';
+    } else {
+        user_name.innerText = 'User'; // Значение по умолчанию
+    }
+} else {
+    console.error('Telegram Web Apps API is not available.');
+}
