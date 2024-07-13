@@ -13,7 +13,6 @@ let b_b_home = document.getElementById('b_b_home');
 let b_b_ref = document.getElementById('b_b_ref');
 let b_b_earn = document.getElementById('b_b_earn');
 
-
 let ref_open = document.getElementById('ref_open');
 let earn_open = document.getElementById('earn_open');
 
@@ -46,14 +45,17 @@ let bonus_info_i = document.getElementById('bonus_info_i');
 
 let bonus_init = 1000;
 
+// Ключ для времени последнего выхода
+let lastExitTimeKey = 'last_exit_time';
+
 // Функция для загрузки данных из localStorage
 function loadFromLocalStorage() {
     const savedCount = localStorage.getItem('count_span');
     const savedCount2 = localStorage.getItem('count_span2');
     const savedCoin = localStorage.getItem('coin_number');
-
     const savedBonus_span = localStorage.getItem('bonus_span');
     const savedBonus_span2 = localStorage.getItem('bonus_span2');
+    const lastExitTime = localStorage.getItem(lastExitTimeKey);
 
     if (savedCount !== null) {
         count_span.innerText = savedCount;
@@ -85,7 +87,12 @@ function loadFromLocalStorage() {
         bonus_span2.innerText = parseInt(bonus_init);
     }
 
-    updateBonusRoad(); // Обновляем состояние bonus_road и bonus_info
+    // Если время последнего выхода доступно, восстанавливаем count_span
+    if (lastExitTime) {
+        restoreCountBasedOnTime(parseInt(lastExitTime, 10));
+    } else {
+        updateBonusRoad(); // Обновляем бонусную дорогу сразу при первой загрузке
+    }
 }
 
 // Функция для сохранения данных в localStorage
@@ -95,6 +102,25 @@ function saveToLocalStorage() {
     localStorage.setItem('coin_number', coin_number.innerText);
     localStorage.setItem('bonus_span', bonus_span.innerText);
     localStorage.setItem('bonus_span2', bonus_span2.innerText);
+
+    // Сохраняем текущее время в миллисекундах
+    localStorage.setItem(lastExitTimeKey, Date.now().toString());
+}
+
+// Функция для восстановления count_span на основе времени
+function restoreCountBasedOnTime(lastExitTime) {
+    const currentTime = Date.now();
+    const timeElapsed = currentTime - lastExitTime; // Время в миллисекундах
+    const secondsElapsed = Math.floor(timeElapsed / 1000); // Преобразуем в секунды
+
+    // Вычисляем восстановленное значение count_span
+    const restoreCount = Math.min(maxCountSpan, parseInt(count_span.innerText, 10) + restore_amount * secondsElapsed);
+
+    // Ограничиваем значение до count_span2
+    count_span.innerText = Math.min(parseInt(count_span2.innerText, 10), restoreCount);
+
+    // Сохраняем обновленные значения
+    saveToLocalStorage();
 }
 
 // Функция для восстановления count_span
@@ -114,16 +140,23 @@ function restoreCount() {
 // Функция для обновления ширины bonus_road и стиля bonus_info
 function updateBonusRoad() {
     let currentBonus = parseInt(bonus_span.innerText, 10);
+    let bonusSpan2 = parseInt(bonus_span2.innerText, 10);
     let bonusRoadWidth = (currentBonus / bonus_init) * 250; // Ширина пропорциональна значению bonus_span
-    bonus_road.style.width = `${bonusRoadWidth}px`;
+
+    // Обновляем ширину bonus_road только если currentBonus < bonusSpan2
+    if (currentBonus < bonusSpan2) {
+        bonus_road.style.width = `${bonusRoadWidth}px`;
+    } else {
+        bonus_road.style.width = '250px'; // Устанавливаем максимальную ширину, если bonus_span достиг bonus_span2
+    }
 
     // Обновляем стиль bonus_info
     if (currentBonus >= bonus_init) {
         document.querySelector('.bonus_info').style.border = '1px solid lime';
-        bonus_info_i.style.color='lime'
+        bonus_info_i.style.color = 'lime';
     } else {
         document.querySelector('.bonus_info').style.border = '1px solid white';
-        bonus_info_i.style.color='white'
+        bonus_info_i.style.color = 'white';
     }
 }
 
@@ -146,8 +179,9 @@ main_coin.addEventListener('click', (event) => {
         // Увеличиваем значение coin_number
         coin_number.innerText = currentCoinNumber + current_number;
 
-        // Увеличиваем значение bonus_span
-        bonus_span.innerText = currentBonus + current_number;
+        // Увеличиваем значение bonus_span, но не превышая bonus_span2
+        let newBonus = Math.min(currentBonus + current_number, parseInt(bonus_span2.innerText, 10));
+        bonus_span.innerText = newBonus;
 
         // Обновляем состояние bonus_road и bonus_info
         updateBonusRoad();
@@ -215,8 +249,8 @@ setInterval(restoreCount, restore_interval);
 // Загрузка данных из localStorage при загрузке страницы
 loadFromLocalStorage();
 
-// let user_name = document.getElementById('user_name');
-// user_name.innerText = `${tg.initDataUnsafe.user.first_name}`;
+// Сохраняем данные перед закрытием страницы
+window.addEventListener('beforeunload', saveToLocalStorage);
 
 // Инициализация Telegram Web Apps API
 const tg = window.Telegram.WebApp;
