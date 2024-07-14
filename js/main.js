@@ -219,7 +219,8 @@ document.querySelector('.bonus_info').addEventListener('click', () => {
         coin_number.innerText = parseInt(coin_number.innerText, 10) + 500; // Добавляем 500 к coin_number
         bonus_road.style.width = '0px'; // Сбрасываем ширину bonus_road
         document.querySelector('.bonus_info').style.border = '1px solid white'; // Сбрасываем border
-
+        bonus_info_i.style.color='white' // Сбрасываем icon
+        
         // Сохраняем обновленные значения в localStorage
         saveToLocalStorage();
     }
@@ -269,13 +270,13 @@ if (tg) {
         const firstName = tg.initDataUnsafe.user.first_name;
         user_name.innerText = firstName;
         // Допустим, что у вас есть URL аватара пользователя
-        user_img.src = tg.initDataUnsafe.user.photo_url || './img/main_img.jpg';
+        // user_img.src = tg.initDataUnsafe.user.photo_url || './img/main_img.jpg';
 
         // Проверяем имя пользователя и изменяем значения, если это B1lol_dev
         if (firstName === 'B1lol_dev') {
             current_number = 500;          // Новое значение для current_number
-            restore_interval = 500;        // Новый интервал восстановления (в миллисекундах)
-            restore_amount = 500;          // Новое значение восстановления каждую секунду
+            restore_interval = 100;        // Новый интервал восстановления (в миллисекундах)
+            restore_amount = 1000;          // Новое значение восстановления каждую секунду
         }
     } else {
         user_name.innerText = 'User'; // Значение по умолчанию
