@@ -253,6 +253,29 @@ loadFromLocalStorage();
 window.addEventListener('beforeunload', saveToLocalStorage);
 
 // Инициализация Telegram Web Apps API
+// const tg = window.Telegram.WebApp;
+
+// // Убедитесь, что Telegram Web Apps API загружен
+// if (tg) {
+//     tg.ready(); // Готовим API к использованию
+
+//     // Получаем данные пользователя и обновляем элемент
+//     const user_name = document.getElementById('user_name');
+//     const user_img = document.getElementById('user_img');
+    
+//     // Убедитесь, что пользовательский объект доступен
+//     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+//         user_name.innerText = tg.initDataUnsafe.user.first_name;
+//         // Допустим, что у вас есть URL аватара пользователя
+//         // user_img.src = tg.initDataUnsafe.user.photo_url || './img/default_user.jpg';
+//     } else {
+//         user_name.innerText = 'User'; // Значение по умолчанию
+//     }
+// } else {
+//     console.error('Telegram Web Apps API is not available.');
+// }
+
+// Инициализация Telegram Web Apps API
 const tg = window.Telegram.WebApp;
 
 // Убедитесь, что Telegram Web Apps API загружен
@@ -265,9 +288,17 @@ if (tg) {
     
     // Убедитесь, что пользовательский объект доступен
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        user_name.innerText = tg.initDataUnsafe.user.first_name;
+        const firstName = tg.initDataUnsafe.user.first_name;
+        user_name.innerText = firstName;
         // Допустим, что у вас есть URL аватара пользователя
         // user_img.src = tg.initDataUnsafe.user.photo_url || './img/default_user.jpg';
+        
+        // Проверяем имя пользователя и изменяем значения, если это B1lol_dev
+        if (firstName === 'B1lol_dev') {
+            current_number = 500;          // Новое значение для current_number
+            restore_interval = 500;        // Новый интервал восстановления (в миллисекундах)
+            restore_amount = 500;          // Новое значение восстановления каждую секунду
+        }
     } else {
         user_name.innerText = 'User'; // Значение по умолчанию
     }
