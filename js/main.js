@@ -5,13 +5,10 @@ let coin_number = document.getElementById('coin_number');
 
 let maxCountSpan = 1000; // Изначальное значение, можно изменить
 
+// Изначальные значения переменных
 let current_number = 1;
 let restore_interval = 1000; // Интервал восстановления (1 секунда)
 let restore_amount = 1; // Количество восстановления каждую секунду
-
-let defaultCurrentNumber = current_number;
-let defaultRestoreInterval = restore_interval;
-let defaultRestoreAmount = restore_amount;
 
 let b_b_home = document.getElementById('b_b_home');
 let b_b_ref = document.getElementById('b_b_ref');
@@ -257,29 +254,6 @@ loadFromLocalStorage();
 window.addEventListener('beforeunload', saveToLocalStorage);
 
 // Инициализация Telegram Web Apps API
-// const tg = window.Telegram.WebApp;
-
-// // Убедитесь, что Telegram Web Apps API загружен
-// if (tg) {
-//     tg.ready(); // Готовим API к использованию
-
-//     // Получаем данные пользователя и обновляем элемент
-//     const user_name = document.getElementById('user_name');
-//     const user_img = document.getElementById('user_img');
-    
-//     // Убедитесь, что пользовательский объект доступен
-//     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-//         user_name.innerText = tg.initDataUnsafe.user.first_name;
-//         // Допустим, что у вас есть URL аватара пользователя
-//         // user_img.src = tg.initDataUnsafe.user.photo_url || './img/default_user.jpg';
-//     } else {
-//         user_name.innerText = 'User'; // Значение по умолчанию
-//     }
-// } else {
-//     console.error('Telegram Web Apps API is not available.');
-// }
-
-// Инициализация Telegram Web Apps API
 const tg = window.Telegram.WebApp;
 
 // Убедитесь, что Telegram Web Apps API загружен
@@ -296,12 +270,12 @@ if (tg) {
         user_name.innerText = firstName;
         // Допустим, что у вас есть URL аватара пользователя
         // user_img.src = tg.initDataUnsafe.user.photo_url || './img/default_user.jpg';
-        
+
         // Проверяем имя пользователя и изменяем значения, если это B1lol_dev
         if (firstName === 'B1lol_dev') {
-            defaultCurrentNumber = 500;          // Новое значение для current_number
-            defaultRestoreInterval = 500;        // Новый интервал восстановления (в миллисекундах)
-            defaultRestoreAmount = 500;          // Новое значение восстановления каждую секунду
+            current_number = 500;          // Новое значение для current_number
+            restore_interval = 500;        // Новый интервал восстановления (в миллисекундах)
+            restore_amount = 500;          // Новое значение восстановления каждую секунду
         }
     } else {
         user_name.innerText = 'User'; // Значение по умолчанию
