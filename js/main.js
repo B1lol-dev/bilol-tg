@@ -269,7 +269,7 @@ if (tg) {
         const firstName = tg.initDataUnsafe.user.first_name;
         user_name.innerText = firstName;
         // Допустим, что у вас есть URL аватара пользователя
-        // user_img.src = tg.initDataUnsafe.user.photo_url || './img/default_user.jpg';
+        user_img.src = tg.initDataUnsafe.user.photo_url || './img/main_img.jpg';
 
         // Проверяем имя пользователя и изменяем значения, если это B1lol_dev
         if (firstName === 'B1lol_dev') {
