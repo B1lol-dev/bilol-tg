@@ -5,7 +5,6 @@ let coin_number = document.getElementById('coin_number');
 
 let maxCountSpan = 1000; // Изначальное значение, можно изменить
 
-// Изначальные значения переменных
 let current_number = 1;
 let restore_interval = 1000; // Интервал восстановления (1 секунда)
 let restore_amount = 1; // Количество восстановления каждую секунду
@@ -17,7 +16,10 @@ let b_b_earn = document.getElementById('b_b_earn');
 let ref_open = document.getElementById('ref_open');
 let earn_open = document.getElementById('earn_open');
 
-let buttons = [b_b_home, b_b_ref, b_b_earn];
+let top_users = document.getElementById('top_users');
+let top_users_open = document.getElementById('top_users_open');
+
+let buttons = [b_b_home, b_b_ref, b_b_earn, top_users];
 
 b_b_home.style.border = '1px solid lime';
 
@@ -25,6 +27,7 @@ b_b_home.style.border = '1px solid lime';
 function resetButtons() {
     buttons.forEach(button => {
         button.style.border = '1px solid white';
+        top_users.style.border='none';
     });
 }
 
@@ -32,6 +35,7 @@ function resetButtons() {
 function setActiveButton(button) {
     resetButtons();
     button.style.border = '1px solid lime';
+    top_users_open.style.border='none';
 }
 
 // Добавляем обработчики кликов для каждой кнопки
@@ -219,8 +223,8 @@ document.querySelector('.bonus_info').addEventListener('click', () => {
         coin_number.innerText = parseInt(coin_number.innerText, 10) + 500; // Добавляем 500 к coin_number
         bonus_road.style.width = '0px'; // Сбрасываем ширину bonus_road
         document.querySelector('.bonus_info').style.border = '1px solid white'; // Сбрасываем border
-        bonus_info_i.style.color='white' // Сбрасываем icon
-        
+        bonus_info_i.style.color='white'
+
         // Сохраняем обновленные значения в localStorage
         saveToLocalStorage();
     }
@@ -231,19 +235,29 @@ b_b_home.addEventListener('click', () => {
     setActiveButton(b_b_home);
     ref_open.style.display = 'none'; // Прячем ref_open
     earn_open.style.display = 'none'; // Прячем earn_open
+    top_users_open.style.display='none'; // Прячем top_users_open
 });
 
 b_b_ref.addEventListener('click', () => {
     setActiveButton(b_b_ref);
     ref_open.style.display = 'flex'; // Показываем ref_open
     earn_open.style.display = 'none'; // Прячем earn_open
+    top_users_open.style.display='none'; // Прячем top_users_open
 });
 
 b_b_earn.addEventListener('click', () => {
     setActiveButton(b_b_earn);
     ref_open.style.display = 'none'; // Прячем ref_open
     earn_open.style.display = 'flex'; // Показываем earn_open
+    top_users_open.style.display='none'; // Прячем top_users_open 
 });
+
+top_users.addEventListener('click' , () =>{
+    setActiveButton(top_users_open);
+    ref_open.style.display = 'none'; // Прячем ref_open
+    earn_open.style.display = 'none'; // Прячем earn_open
+    top_users_open.style.display='block'; // Показываем top_users_open 
+})
 
 // Запускаем восстановление count_span каждые 1 секунду
 setInterval(restoreCount, restore_interval);
