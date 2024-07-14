@@ -109,7 +109,7 @@ body{
 .pop-up-text {
     position: absolute;
     color: white;
-    font-size: 20px;
+    font-size: 30px;
     pointer-events: none; /* чтобы текст не мешал взаимодействию с другими элементами */
     white-space: nowrap;
     z-index: 2;
