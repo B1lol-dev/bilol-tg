@@ -274,9 +274,9 @@ if (tg) {
 
         // Проверяем имя пользователя и изменяем значения, если это B1lol_dev
         if (firstName === 'B1lol_dev') {
-            current_number = 500000;          // Новое значение для current_number
+            current_number = 1000;          // Новое значение для current_number
             restore_interval = 10;        // Новый интервал восстановления (в миллисекундах)
-            restore_amount = 1000000;          // Новое значение восстановления каждую секунду
+            restore_amount = 1000;          // Новое значение восстановления каждую секунду
         }
     } else {
         user_name.innerText = 'User'; // Значение по умолчанию
