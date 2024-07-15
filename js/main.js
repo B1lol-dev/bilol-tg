@@ -1,3 +1,79 @@
+const API_URL = 'https://f0ce305c-4365-4d9e-8d96-80da0b73e5ce-00-rin38d6ff602.sisko.replit.dev';
+
+// Функция для получения имени пользователя из Telegram
+function getTelegramUsername() {
+    const tg = window.Telegram.WebApp;
+    if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        return tg.initDataUnsafe.user.username || tg.initDataUnsafe.user.first_name;
+    }
+    return 'Unknown';
+}
+
+// Функция для загрузки данных пользователя из API
+function loadUserData() {
+    const username = getTelegramUsername();
+
+    fetch(`${API_URL}/get-user`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.coin_number !== undefined) {
+            coin_number.innerText = data.coin_number;
+        } else {
+            // Создаем нового пользователя, если не найден
+            fetch(`${API_URL}/add-user`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, coin_number: 0 })
+            })
+            .then(response => response.json())
+            .then(() => {
+                coin_number.innerText = 0;
+            });
+        }
+    });
+}
+
+// Функция для обновления данных пользователя через API
+function updateUserCoinNumber(newCoinNumber) {
+    const username = getTelegramUsername();
+
+    fetch(`${API_URL}/update-user`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, coin_number: newCoinNumber })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('User data updated', data);
+    });
+}
+
+// Функция для обновления топа пользователей
+function updateTopUsers() {
+    fetch(`${API_URL}/top-users`)
+    .then(response => response.json())
+    .then(users => {
+        let topUsersDiv = document.getElementById('top_users_open_users');
+        topUsersDiv.innerHTML = '';
+
+        users.forEach((user, index) => {
+            let userDiv = document.createElement('div');
+            userDiv.innerText = `#${index + 1}. @${user.username} - ${user.coin_number}`;
+            topUsersDiv.appendChild(userDiv);
+        });
+    });
+}
+
 const main_coin = document.getElementById('main_coin');
 let count_span = document.getElementById('count_span');
 let count_span2 = document.getElementById('count_span2');
@@ -42,6 +118,7 @@ function setActiveButton(button) {
 b_b_home.addEventListener('click', () => setActiveButton(b_b_home));
 b_b_ref.addEventListener('click', () => setActiveButton(b_b_ref));
 b_b_earn.addEventListener('click', () => setActiveButton(b_b_earn));
+
 
 let bonus_road = document.getElementById('bonus_road');
 let bonus_span = document.getElementById('bonus_span');
@@ -148,6 +225,7 @@ function updateBonusRoad() {
     let bonusSpan2 = parseInt(bonus_span2.innerText, 10);
     let bonusRoadWidth = (currentBonus / bonus_init) * 250; // Ширина пропорциональна значению bonus_span
 
+
     // Обновляем ширину bonus_road только если currentBonus < bonusSpan2
     if (currentBonus < bonusSpan2) {
         bonus_road.style.width = `${bonusRoadWidth}px`;
@@ -167,40 +245,32 @@ function updateBonusRoad() {
 
 // Обработчик клика на main_coin
 main_coin.addEventListener('click', (event) => {
-    // Преобразуем текстовые значения в числа
     let currentCount = parseInt(count_span.innerText, 10);
     let currentCoinNumber = parseInt(coin_number.innerText, 10);
     let currentBonus = parseInt(bonus_span.innerText, 10);
 
-    // Проверяем, можно ли уменьшить count_span и увеличить coin_number
     if (currentCount >= current_number) {
-        // Уменьшаем значение счетчика
         let newCount = currentCount - current_number;
         if (newCount < 0) {
-            newCount = 0; // Устанавливаем значение в 0, если оно меньше 0
+            newCount = 0;
         }
         count_span.innerText = newCount;
 
-        // Увеличиваем значение coin_number
         coin_number.innerText = currentCoinNumber + current_number;
 
-        // Увеличиваем значение bonus_span, но не превышая bonus_span2
         let newBonus = Math.min(currentBonus + current_number, parseInt(bonus_span2.innerText, 10));
         bonus_span.innerText = newBonus;
 
-        // Обновляем состояние bonus_road и bonus_info
         updateBonusRoad();
 
-        // Сохраняем обновленные значения в localStorage
         saveToLocalStorage();
+        updateUserCoinNumber(parseInt(coin_number.innerText, 10)); // Обновляем данные пользователя через API
 
-        // Создаем и стилизуем текстовый элемент
         const popUpText = document.createElement('div');
         popUpText.className = 'pop-up-text';
         popUpText.innerText = '+' + current_number;
         document.body.appendChild(popUpText);
 
-        // Определяем позицию, где был клик
         const rect = main_coin.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
@@ -208,7 +278,6 @@ main_coin.addEventListener('click', (event) => {
         popUpText.style.left = `${rect.left + x}px`;
         popUpText.style.top = `${rect.top + y}px`;
 
-        // Удаляем текст через 1 секунду
         setTimeout(() => {
             popUpText.remove();
         }, 1000);
@@ -223,7 +292,10 @@ document.querySelector('.bonus_info').addEventListener('click', () => {
         coin_number.innerText = parseInt(coin_number.innerText, 10) + 500; // Добавляем 500 к coin_number
         bonus_road.style.width = '0px'; // Сбрасываем ширину bonus_road
         document.querySelector('.bonus_info').style.border = '1px solid white'; // Сбрасываем border
-        bonus_info_i.style.color='white'
+        bonus_info_i.style.color = 'white';
+
+        // Обновляем данные пользователя через API
+        updateUserCoinNumber(parseInt(coin_number.innerText, 10));
 
         // Сохраняем обновленные значения в localStorage
         saveToLocalStorage();
@@ -235,35 +307,38 @@ b_b_home.addEventListener('click', () => {
     setActiveButton(b_b_home);
     ref_open.style.display = 'none'; // Прячем ref_open
     earn_open.style.display = 'none'; // Прячем earn_open
-    top_users_open.style.display='none'; // Прячем top_users_open
+    top_users_open.style.display = 'none'; // Прячем top_users_open
 });
 
 b_b_ref.addEventListener('click', () => {
     setActiveButton(b_b_ref);
     ref_open.style.display = 'flex'; // Показываем ref_open
     earn_open.style.display = 'none'; // Прячем earn_open
-    top_users_open.style.display='none'; // Прячем top_users_open
+    top_users_open.style.display = 'none'; // Прячем top_users_open
 });
 
 b_b_earn.addEventListener('click', () => {
     setActiveButton(b_b_earn);
     ref_open.style.display = 'none'; // Прячем ref_open
     earn_open.style.display = 'flex'; // Показываем earn_open
-    top_users_open.style.display='none'; // Прячем top_users_open 
+    top_users_open.style.display = 'none'; // Прячем top_users_open 
 });
 
-top_users.addEventListener('click' , () =>{
+top_users.addEventListener('click', () => {
     setActiveButton(top_users_open);
     ref_open.style.display = 'none'; // Прячем ref_open
     earn_open.style.display = 'none'; // Прячем earn_open
-    top_users_open.style.display='block'; // Показываем top_users_open 
-})
+    top_users_open.style.display = 'block'; // Показываем top_users_open
+    updateTopUsers(); // Обновляем список топ пользователей
+});
+
 
 // Запускаем восстановление count_span каждые 1 секунду
 setInterval(restoreCount, restore_interval);
 
 // Загрузка данных из localStorage при загрузке страницы
 loadFromLocalStorage();
+loadUserData(); // Загрузка данных пользователя из API
 
 // Сохраняем данные перед закрытием страницы
 window.addEventListener('beforeunload', saveToLocalStorage);
