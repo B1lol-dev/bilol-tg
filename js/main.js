@@ -195,7 +195,7 @@ function saveToLocalStorage() {
     localStorage.setItem('bonus_span', bonus_span.innerText);
     localStorage.setItem('bonus_span2', bonus_span2.innerText);
 
-    localStorage.clear();
+    // localStorage.clear();
 
     // Сохраняем текущее время в миллисекундах
     localStorage.setItem(lastExitTimeKey, Date.now().toString());
