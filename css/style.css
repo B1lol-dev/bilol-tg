@@ -3,6 +3,8 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* font-family: fantasy; */
+    /* font-family: cursive; */
 }
 
 body{
@@ -43,6 +45,7 @@ body{
     color: white;
     text-align: center;
     user-select: none;
+    margin-top: 10px;
 }
 
 #top_users_open_users{
@@ -51,7 +54,10 @@ body{
     position: absolute;
     overflow-y: scroll;
     width: 390px;
+    padding-left: 30px;
+    padding-top: 10px;
 }
+
 
 ::-webkit-scrollbar{
     display: none;
@@ -135,6 +141,31 @@ body{
 }
 
 
+.rocket_main_coin{
+    border-radius: 50%;
+    height: 200px;
+    position: absolute;
+    margin-inline: 95px;
+    box-shadow: 0 0 50px 10px lime !important;
+    /* margin-top: 195px; */
+    top: 235px;
+    user-select: none; /* Отключает выделение текста */
+    pointer-events: auto; /* Позволяет взаимодействовать с элементом */
+    z-index: 1;
+    /* Предотвращает перетаскивание элемента */
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    transform: scale(120%);
+
+    &:active{
+        transform: scale(115%);
+        box-shadow: 0 0 60px 10px lime !important;
+    }
+}
+
 
 /* Стили для анимации всплывающего текста */
 @keyframes moveUp {
@@ -159,6 +190,34 @@ body{
     -webkit-text-stroke: 0.5px black;
 }
 
+#non_busters_center{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#non_buster{
+    color: white;
+    position: absolute;
+    pointer-events: none; /* чтобы текст не мешал взаимодействию с другими элементами */
+    white-space: nowrap;
+    z-index: 20;
+    display: none;
+
+    animation: MoveUpBuster 1s forwards;
+}
+
+@keyframes MoveUpBuster {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+}
 
 
 
@@ -177,6 +236,91 @@ body{
     user-select: none;
     margin-top: 100px;
 }
+
+
+#boosts{
+    color: white;
+    user-select: none;
+    position: absolute;
+    bottom: 100px;
+    width: 100px;
+    left: 270px;
+}
+
+#boosts_open{
+    height: calc(100% - 95px);
+    position: absolute;
+    bottom: 95px;
+    background: black;
+    z-index: 9;
+    width: 390px;
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.boosts_open_balance{
+    position: absolute;
+    top: 30px;
+    user-select: none;
+}
+
+.boosts_open_balance p{
+    color: gray;
+    text-align: center;
+}
+
+#boosts_open_balance_h1{
+    font-weight: bold;
+    font-size: 40px;
+    text-align: center;
+}
+
+.daily_boosts{
+    width: 350px;
+    user-select: none;
+    position: absolute;
+    top: 150px;
+}
+
+.boosters_wrapper{
+    display: inline-flex;
+}
+
+#booster_rocket{
+    width: calc(175px - 12px);
+    height: 70px;
+    border: 1px solid white;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 3px;
+}
+
+.booster_wrapper_i{
+    font-size: 50px;
+    position: absolute;
+    margin-left: 90px;
+}
+
+.booster_wrapper_text_wrapper{
+    margin-left: 10px;
+}
+
+#booster_energy{
+    width: calc(175px - 12px);
+    height: 70px;
+    border: 1px solid white;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 3px;
+}
+
+
 
 .bottom_bar{
     height: 90px;
