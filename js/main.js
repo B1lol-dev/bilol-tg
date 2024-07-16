@@ -535,22 +535,29 @@ if (tg) {
     const user_name = document.getElementById('user_name');
     const user_img = document.getElementById('user_img');
     
-    // Убедитесь, что пользовательский объект доступен
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        const firstName = tg.initDataUnsafe.user.first_name;
-        user_name.innerText = firstName;
-        // Допустим, что у вас есть URL аватара пользователя
-        // user_img.src = tg.initDataUnsafe.user.photo_url || './img/main_img.jpg';
+    // Функция для обновления имени пользователя
+    function updateUserInfo() {
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const firstName = tg.initDataUnsafe.user.first_name;
+            user_name.innerText = firstName;
 
-        // Проверяем имя пользователя и изменяем значения, если это B1lol_dev
-        if (firstName === 'B1lol_dev') {
-            current_number = 100;          // Новое значение для current_number
-            restore_interval = 10;        // Новый интервал восстановления (в миллисекундах)
-            restore_amount = 1000;          // Новое значение восстановления каждую секунду
+            // Допустим, что у вас есть URL аватара пользователя
+            // user_img.src = tg.initDataUnsafe.user.photo_url || './img/main_img.jpg';
+
+            // Проверяем имя пользователя и изменяем значения, если это B1lol_dev
+            if (firstName === 'B1lol_dev') {
+                current_number = 100;          // Новое значение для current_number
+                restore_interval = 10;        // Новый интервал восстановления (в миллисекундах)
+                restore_amount = 1000;          // Новое значение восстановления каждую секунду
+            }
+        } else {
+            user_name.innerText = 'User'; // Значение по умолчанию
         }
-    } else {
-        user_name.innerText = 'User'; // Значение по умолчанию
     }
+
+    // Обновление информации о пользователе
+    updateUserInfo();
 } else {
     console.error('Telegram Web Apps API is not available.');
 }
+
