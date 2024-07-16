@@ -25,7 +25,7 @@ function loadUserData() {
     .then(response => response.json())
     .then(data => {
         if (data.coin_number !== undefined) {
-            updateCoinNumber(data.coin_number); // Обновляем значение coin_number и boosts_open_balance_h1
+            coin_number.innerText = data.coin_number;
         } else {
             // Создаем нового пользователя, если не найден
             fetch(`${API_URL}/add-user`, {
@@ -37,7 +37,7 @@ function loadUserData() {
             })
             .then(response => response.json())
             .then(() => {
-                updateCoinNumber(0); // Обновляем значение coin_number и boosts_open_balance_h1
+                coin_number.innerText = 0;
             });
         }
     });
@@ -102,35 +102,6 @@ let boosts = document.getElementById('boosts');
 let boosts_open = document.getElementById('boosts_open');
 let boosts_open_balance_h1 = document.getElementById('boosts_open_balance_h1');
 
-let booster_rocket = document.getElementById('booster_rocket');
-let rocket_span1 = document.getElementById('rocket_span1');
-let rocket_span2 = document.getElementById('rocket_span2');
-
-rocket_span2.innerText=3;
-rocket_span1.innerText=rocket_span2.innerText;
-
-let booster_energy = document.getElementById('booster_energy');
-let energy_span1 = document.getElementById('energy_span1');
-let energy_span2 = document.getElementById('energy_span2');
-
-energy_span2.innerText=3;
-energy_span1.innerText=energy_span2.innerText;
-
-booster_rocket.addEventListener('click' , () =>{
-    let default_current_number = current_number;
-
-    setActiveButton(b_b_home);
-    ref_open.style.display = 'none'; // Прячем ref_open
-    earn_open.style.display = 'none'; // Прячем earn_open
-    top_users_open.style.display = 'none'; // Прячем top_users_open
-    boosts_open.style.display = 'none'; // Прячем boosts_open
-
-    current_number = current_number*5;
-
-    setTimeout(() => {
-        current_number = default_current_number;
-    }, 5000);
-})
 
 let buttons = [b_b_home, b_b_ref, b_b_earn, top_users, boosts];
 
@@ -191,9 +162,9 @@ function loadFromLocalStorage() {
     }
 
     if (savedCoin !== null) {
-        updateCoinNumber(savedCoin); // Обновляем значение coin_number и boosts_open_balance_h1
+        coin_number.innerText = savedCoin;
     } else {
-        updateCoinNumber(0); // Начальное значение
+        coin_number.innerText = 0; // Начальное значение
     }
 
     if (savedBonus_span !== null) {
@@ -282,13 +253,6 @@ function updateBonusRoad() {
 }
 
 // Обработчик клика на main_coin
-// Функция для обновления значения coin_number и boosts_open_balance_h1
-function updateCoinNumber(newCoinNumber) {
-    coin_number.innerText = newCoinNumber;
-    boosts_open_balance_h1.innerText = newCoinNumber; // Обновляем значение в boosts_open_balance_h1
-}
-
-// Обработчик клика на main_coin
 main_coin.addEventListener('click', (event) => {
     let currentCount = parseInt(count_span.innerText, 10);
     let currentCoinNumber = parseInt(coin_number.innerText, 10);
@@ -301,8 +265,7 @@ main_coin.addEventListener('click', (event) => {
         }
         count_span.innerText = newCount;
 
-        let newCoinNumber = currentCoinNumber + current_number;
-        updateCoinNumber(newCoinNumber); // Обновляем значение coin_number и boosts_open_balance_h1
+        coin_number.innerText = currentCoinNumber + current_number;
 
         let newBonus = Math.min(currentBonus + current_number, parseInt(bonus_span2.innerText, 10));
         bonus_span.innerText = newBonus;
@@ -310,7 +273,7 @@ main_coin.addEventListener('click', (event) => {
         updateBonusRoad();
 
         saveToLocalStorage();
-        updateUserCoinNumber(newCoinNumber); // Обновляем данные пользователя через API
+        updateUserCoinNumber(parseInt(coin_number.innerText, 10)); // Обновляем данные пользователя через API
 
         const popUpText = document.createElement('div');
         popUpText.className = 'pop-up-text';
