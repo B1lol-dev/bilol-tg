@@ -237,7 +237,7 @@ let lastExitTimeKey = 'last_exit_time';
 function loadFromLocalStorage() {
     const savedCount = localStorage.getItem('count_span');
     const savedCount2 = localStorage.getItem('count_span2');
-    const savedCoin = localStorage.getItem('coin_number');
+    // const savedCoin = localStorage.getItem('coin_number');
     const savedBonus_span = localStorage.getItem('bonus_span');
     const savedBonus_span2 = localStorage.getItem('bonus_span2');
     const lastExitTime = localStorage.getItem(lastExitTimeKey);
@@ -302,7 +302,7 @@ function loadFromLocalStorage() {
 function saveToLocalStorage() {
     localStorage.setItem('count_span', count_span.innerText);
     localStorage.setItem('count_span2', count_span2.innerText);
-    localStorage.setItem('coin_number', coin_number.innerText);
+    // localStorage.setItem('coin_number', coin_number.innerText);
     localStorage.setItem('bonus_span', bonus_span.innerText);
     localStorage.setItem('bonus_span2', bonus_span2.innerText);
 
@@ -535,29 +535,22 @@ if (tg) {
     const user_name = document.getElementById('user_name');
     const user_img = document.getElementById('user_img');
     
-    // Функция для обновления имени пользователя
-    function updateUserInfo() {
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            const firstName = tg.initDataUnsafe.user.first_name;
-            user_name.innerText = firstName;
+    // Убедитесь, что пользовательский объект доступен
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const firstName = tg.initDataUnsafe.user.first_name;
+        user_name.innerText = firstName;
+        // Допустим, что у вас есть URL аватара пользователя
+        // user_img.src = tg.initDataUnsafe.user.photo_url || './img/main_img.jpg';
 
-            // Допустим, что у вас есть URL аватара пользователя
-            // user_img.src = tg.initDataUnsafe.user.photo_url || './img/main_img.jpg';
-
-            // Проверяем имя пользователя и изменяем значения, если это B1lol_dev
-            if (firstName === 'B1lol_dev') {
-                current_number = 100;          // Новое значение для current_number
-                restore_interval = 10;        // Новый интервал восстановления (в миллисекундах)
-                restore_amount = 1000;          // Новое значение восстановления каждую секунду
-            }
-        } else {
-            user_name.innerText = 'User'; // Значение по умолчанию
+        // Проверяем имя пользователя и изменяем значения, если это B1lol_dev
+        if (firstName === 'B1lol_dev') {
+            current_number = 100;          // Новое значение для current_number
+            restore_interval = 10;        // Новый интервал восстановления (в миллисекундах)
+            restore_amount = 1000;          // Новое значение восстановления каждую секунду
         }
+    } else {
+        user_name.innerText = 'User-0'; // Значение по умолчанию
     }
-
-    // Обновление информации о пользователе
-    updateUserInfo();
 } else {
     console.error('Telegram Web Apps API is not available.');
 }
-
