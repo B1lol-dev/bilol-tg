@@ -1,5 +1,6 @@
 const API_URL = 'https://f0ce305c-4365-4d9e-8d96-80da0b73e5ce-00-rin38d6ff602.sisko.replit.dev';
-// const API_URL = 'https://www.b1ldev-databaze.api';
+
+// const API_URL = 'www' 
 
 // Функция для получения имени пользователя из Telegram
 function getTelegramUsername() {
@@ -83,7 +84,7 @@ let coin_number = document.getElementById('coin_number');
 let maxCountSpan = 1000; // Изначальное значение, можно изменить
 
 let current_number = 1;
-let restore_interval = 2000; // Интервал восстановления (2 секунд)
+let restore_interval = 1000; // Интервал восстановления (1 секунда)
 let restore_amount = 1; // Количество восстановления каждую секунду
 
 let b_b_home = document.getElementById('b_b_home');
@@ -96,6 +97,7 @@ let earn_open = document.getElementById('earn_open');
 let top_users = document.getElementById('top_users');
 let top_users_open = document.getElementById('top_users_open');
 
+
 let boosts = document.getElementById('boosts');
 let boosts_open = document.getElementById('boosts_open');
 let boosts_open_balance_h1 = document.getElementById('boosts_open_balance_h1');
@@ -104,97 +106,31 @@ let booster_rocket = document.getElementById('booster_rocket');
 let rocket_span1 = document.getElementById('rocket_span1');
 let rocket_span2 = document.getElementById('rocket_span2');
 
-rocket_span2.innerText = 1;
-rocket_span1.innerText = rocket_span2.innerText;
+rocket_span2.innerText=3;
+rocket_span1.innerText=rocket_span2.innerText;
 
 let booster_energy = document.getElementById('booster_energy');
 let energy_span1 = document.getElementById('energy_span1');
 let energy_span2 = document.getElementById('energy_span2');
 
-energy_span2.innerText = 1;
-energy_span1.innerText = energy_span2.innerText;
+energy_span2.innerText=3;
+energy_span1.innerText=energy_span2.innerText;
 
-
-
-let boosterActive = false;
-
-// Обработчик клика на booster_energy
-booster_energy.addEventListener('click', () => {    
-
-    let currentEnergySpan1 = parseInt(energy_span1.innerText, 10);
-    if (currentEnergySpan1 > 0) {
-        setActiveButton(b_b_home);
-        ref_open.style.display = 'none'; // Прячем ref_open
-        earn_open.style.display = 'none'; // Прячем earn_open
-        top_users_open.style.display = 'none'; // Прячем top_users_open
-        boosts_open.style.display = 'none'; // Прячем boosts_open
-
-        // Уменьшение значения energy_span1 на 1
-        energy_span1.innerText = Math.max(currentEnergySpan1 - 1, 0);
-
-        count_span.innerText=maxCountSpan
-        
-        // Сохраняем обновленные значения в localStorage
-        saveToLocalStorage();
-    } else {
-        // alert('Not enough energy.');
-
-        let non_buster = document.getElementById('non_buster');
-
-        non_buster.innerText='Not enough recharge energy.'
-        non_buster.style.display='block'
-
-        setTimeout(() => {
-            non_buster.style.display='none'
-            non_buster.innerText=''
-        }, 1100);
-    }
-});
-
-booster_rocket.addEventListener('click', () => {
+booster_rocket.addEventListener('click' , () =>{
     let default_current_number = current_number;
 
+    setActiveButton(b_b_home);
+    ref_open.style.display = 'none'; // Прячем ref_open
+    earn_open.style.display = 'none'; // Прячем earn_open
+    top_users_open.style.display = 'none'; // Прячем top_users_open
+    boosts_open.style.display = 'none'; // Прячем boosts_open
 
-    let currentRocketSpan = parseInt(rocket_span1.innerText, 10);
-    if (currentRocketSpan > 0) {
-        setActiveButton(b_b_home);
-        ref_open.style.display = 'none'; // Прячем ref_open
-        earn_open.style.display = 'none'; // Прячем earn_open
-        top_users_open.style.display = 'none'; // Прячем top_users_open
-        boosts_open.style.display = 'none'; // Прячем boosts_open
+    current_number = current_number*5;
 
-        // Уменьшаем значение rocket_span1 на 1
-        rocket_span1.innerText = Math.max(currentRocketSpan - 1, 0);
-        
-        saveToLocalStorage();
-
-        // Устанавливаем флаг активного бустера
-        boosterActive = true;
-        current_number = current_number * 5;
-
-        main_coin.classList.add('rocket_main_coin')
-        
-        setTimeout(() => {
-            // Сбрасываем флаг активного бустера
-            boosterActive = false;
-            current_number = default_current_number;
-            main_coin.classList.remove('rocket_main_coin')
-        }, 10000);
-    } else {
-        // alert('Not enough rocket energy.');
-
-        let non_buster = document.getElementById('non_buster');
-
-        non_buster.innerText='Not enough rocket energy.'
-        non_buster.style.display='block'
-
-        setTimeout(() => {
-            non_buster.style.display='none'
-            non_buster.innerText=''
-        }, 1100);
-    }
-});
-
+    setTimeout(() => {
+        current_number = default_current_number;
+    }, 5000);
+})
 
 let buttons = [b_b_home, b_b_ref, b_b_earn, top_users, boosts];
 
@@ -204,8 +140,8 @@ b_b_home.style.border = '1px solid lime';
 function resetButtons() {
     buttons.forEach(button => {
         button.style.border = '1px solid white';
-        top_users.style.border = 'none';
-        boosts_open.style.border = 'none';
+        top_users.style.border='none';
+        boosts_open.style.border='none';
     });
 }
 
@@ -213,9 +149,9 @@ function resetButtons() {
 function setActiveButton(button) {
     resetButtons();
     button.style.border = '1px solid lime';
-    top_users_open.style.border = 'none';
-    boosts_open.style.border = 'none';
-    boosts.style.border = 'none';
+    top_users_open.style.border='none';
+    boosts_open.style.border='none';
+    boosts.style.border='none';
 }
 
 // Добавляем обработчики кликов для каждой кнопки
@@ -237,7 +173,7 @@ let lastExitTimeKey = 'last_exit_time';
 function loadFromLocalStorage() {
     const savedCount = localStorage.getItem('count_span');
     const savedCount2 = localStorage.getItem('count_span2');
-    // const savedCoin = localStorage.getItem('coin_number');
+    const savedCoin = localStorage.getItem('coin_number');
     const savedBonus_span = localStorage.getItem('bonus_span');
     const savedBonus_span2 = localStorage.getItem('bonus_span2');
     const lastExitTime = localStorage.getItem(lastExitTimeKey);
@@ -272,24 +208,6 @@ function loadFromLocalStorage() {
         bonus_span2.innerText = parseInt(bonus_init);
     }
 
-    if (savedRocketSpan1 !== null) {
-        rocket_span1.innerText = savedRocketSpan1;
-    } else {
-        rocket_span1.innerText = 3; // Начальное значение
-    }
-    
-    if (savedEnergySpan1 !== null) {
-        energy_span1.innerText = savedEnergySpan1;
-    } else {
-        energy_span1.innerText = 3; // Начальное значение
-    }
-    
-    if (savedEnergySpan2 !== null) {
-        energy_span2.innerText = savedEnergySpan2;
-    } else {
-        energy_span2.innerText = 3; // Начальное значение
-    }
-
     // Если время последнего выхода доступно, восстанавливаем count_span
     if (lastExitTime) {
         restoreCountBasedOnTime(parseInt(lastExitTime, 10));
@@ -302,11 +220,9 @@ function loadFromLocalStorage() {
 function saveToLocalStorage() {
     localStorage.setItem('count_span', count_span.innerText);
     localStorage.setItem('count_span2', count_span2.innerText);
-    // localStorage.setItem('coin_number', coin_number.innerText);
+    localStorage.setItem('coin_number', coin_number.innerText);
     localStorage.setItem('bonus_span', bonus_span.innerText);
     localStorage.setItem('bonus_span2', bonus_span2.innerText);
-
-    // localStorage.clear()
 
     // Сохраняем текущее время в миллисекундах
     localStorage.setItem(lastExitTimeKey, Date.now().toString());
@@ -328,28 +244,19 @@ function restoreCountBasedOnTime(lastExitTime) {
     saveToLocalStorage();
 }
 
-
-
 // Функция для восстановления count_span
 function restoreCount() {
-    // Проверяем активность бустера
-    if (!boosterActive) {
-        let currentCount = parseInt(count_span.innerText, 10);
-        let maxCount2 = parseInt(count_span2.innerText, 10);
-
-        if (currentCount < maxCount2) {
-            count_span.innerText = currentCount + restore_amount;
-            if (parseInt(count_span.innerText, 10) > maxCount2) {
-                count_span.innerText = maxCount2; // Ограничиваем значение до count_span2
-            }
-            saveToLocalStorage(); // Сохраняем обновленное значение в localStorage
+    let currentCount = parseInt(count_span.innerText, 10);
+    let maxCount2 = parseInt(count_span2.innerText, 10);
+    
+    if (currentCount < maxCount2) {
+        count_span.innerText = currentCount + restore_amount;
+        if (parseInt(count_span.innerText, 10) > maxCount2) {
+            count_span.innerText = maxCount2; // Ограничиваем значение до count_span2
         }
+        saveToLocalStorage(); // Сохраняем обновленное значение в localStorage
     }
 }
-
-// Запускаем восстановление count_span каждые 1 секунду
-setInterval(restoreCount, restore_interval);
-
 
 // Функция для обновления ширины bonus_road и стиля bonus_info
 function updateBonusRoad() {
@@ -381,50 +288,21 @@ function updateCoinNumber(newCoinNumber) {
     boosts_open_balance_h1.innerText = newCoinNumber; // Обновляем значение в boosts_open_balance_h1
 }
 
+// Обработчик клика на main_coin
 main_coin.addEventListener('click', (event) => {
     let currentCount = parseInt(count_span.innerText, 10);
     let currentCoinNumber = parseInt(coin_number.innerText, 10);
     let currentBonus = parseInt(bonus_span.innerText, 10);
 
-    if (!boosterActive) {
-        if (currentCount >= current_number) {
-            let newCount = currentCount - current_number;
-            if (newCount < 0) {
-                newCount = 0;
-            }
-            count_span.innerText = newCount;
-
-            let newCoinNumber = currentCoinNumber + current_number;
-            updateCoinNumber(newCoinNumber); // Обновляем значение coin_number и boosts_open_balance_h1
-
-            let newBonus = Math.min(currentBonus + current_number, parseInt(bonus_span2.innerText, 10));
-            bonus_span.innerText = newBonus;
-
-            updateBonusRoad();
-
-            saveToLocalStorage();
-            updateUserCoinNumber(newCoinNumber); // Обновляем данные пользователя через API
-
-            const popUpText = document.createElement('div');
-            popUpText.className = 'pop-up-text';
-            popUpText.innerText = '+' + current_number;
-            document.body.appendChild(popUpText);
-
-            const rect = main_coin.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-
-            popUpText.style.left = `${rect.left + x}px`;
-            popUpText.style.top = `${rect.top + y}px`;
-
-            setTimeout(() => {
-                popUpText.remove();
-            }, 1000);
+    if (currentCount >= current_number) {
+        let newCount = currentCount - current_number;
+        if (newCount < 0) {
+            newCount = 0;
         }
-    } else {
-        // При активном бустере просто увеличиваем счетчик монет и бонусов
+        count_span.innerText = newCount;
+
         let newCoinNumber = currentCoinNumber + current_number;
-        updateCoinNumber(newCoinNumber);
+        updateCoinNumber(newCoinNumber); // Обновляем значение coin_number и boosts_open_balance_h1
 
         let newBonus = Math.min(currentBonus + current_number, parseInt(bonus_span2.innerText, 10));
         bonus_span.innerText = newBonus;
@@ -452,8 +330,6 @@ main_coin.addEventListener('click', (event) => {
     }
 });
 
-
-
 // Обработчик клика на bonus_info
 document.querySelector('.bonus_info').addEventListener('click', () => {
     let currentBonus = parseInt(bonus_span.innerText, 10);
@@ -471,6 +347,7 @@ document.querySelector('.bonus_info').addEventListener('click', () => {
         saveToLocalStorage();
     }
 });
+
 
 // Обработчик кликов для кнопок
 b_b_home.addEventListener('click', () => {
@@ -549,7 +426,7 @@ if (tg) {
             restore_amount = 1000;          // Новое значение восстановления каждую секунду
         }
     } else {
-        user_name.innerText = 'User-0'; // Значение по умолчанию
+        user_name.innerText = 'User'; // Значение по умолчанию
     }
 } else {
     console.error('Telegram Web Apps API is not available.');
