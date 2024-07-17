@@ -229,13 +229,20 @@ body{
     user-select: none;
 }
 
+.center_number{
+    display: flex;
+    justify-content: center;
+}
+
+
 #coin_number{
-    text-align: center;
     color: white;
     font-size: 30px;
-    user-select: none;
     margin-top: 100px;
+    position: absolute !important;
+    user-select: none !important;
 }
+
 
 
 #boosts{
