@@ -25,7 +25,7 @@ function loadUserData() {
     .then(response => response.json())
     .then(data => {
         if (data.coin_number !== undefined) {
-            coin_number.innerText = data.coin_number;
+            updateCoinNumber(data.coin_number); // Обновляем значение coin_number и boosts_open_balance_h1
         } else {
             // Создаем нового пользователя, если не найден
             fetch(`${API_URL}/add-user`, {
@@ -37,7 +37,7 @@ function loadUserData() {
             })
             .then(response => response.json())
             .then(() => {
-                coin_number.innerText = 0;
+                updateCoinNumber(0); // Обновляем значение coin_number и boosts_open_balance_h1
             });
         }
     });
@@ -162,9 +162,9 @@ function loadFromLocalStorage() {
     }
 
     if (savedCoin !== null) {
-        coin_number.innerText = savedCoin;
+        updateCoinNumber(savedCoin); // Обновляем значение coin_number и boosts_open_balance_h1
     } else {
-        coin_number.innerText = 0; // Начальное значение
+        updateCoinNumber(0); // Начальное значение
     }
 
     if (savedBonus_span !== null) {
@@ -177,6 +177,24 @@ function loadFromLocalStorage() {
         bonus_span2.innerText = savedBonus_span2;
     } else {
         bonus_span2.innerText = parseInt(bonus_init);
+    }
+
+    if (savedRocketSpan1 !== null) {
+        rocket_span1.innerText = savedRocketSpan1;
+    } else {
+        rocket_span1.innerText = 3; // Начальное значение
+    }
+    
+    if (savedEnergySpan1 !== null) {
+        energy_span1.innerText = savedEnergySpan1;
+    } else {
+        energy_span1.innerText = 3; // Начальное значение
+    }
+    
+    if (savedEnergySpan2 !== null) {
+        energy_span2.innerText = savedEnergySpan2;
+    } else {
+        energy_span2.innerText = 3; // Начальное значение
     }
 
     // Если время последнего выхода доступно, восстанавливаем count_span
@@ -252,6 +270,13 @@ function updateBonusRoad() {
         document.querySelector('.bonus_info').style.border = '1px solid white';
         bonus_info_i.style.color = 'white';
     }
+}
+
+// Обработчик клика на main_coin
+// Функция для обновления значения coin_number и boosts_open_balance_h1
+function updateCoinNumber(newCoinNumber) {
+    coin_number.innerText = newCoinNumber;
+    boosts_open_balance_h1.innerText = newCoinNumber; // Обновляем значение в boosts_open_balance_h1
 }
 
 // Обработчик клика на main_coin
