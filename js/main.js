@@ -100,7 +100,7 @@ let top_users_open = document.getElementById('top_users_open');
 
 let boosts = document.getElementById('boosts');
 let boosts_open = document.getElementById('boosts_open');
-let boosts_open_balance_h1 = document.getElementById('boosts_open_balance_h1');
+// let boosts_open_balance_h1 = document.getElementById('boosts_open_balance_h1');
 
 
 let buttons = [b_b_home, b_b_ref, b_b_earn, top_users, boosts];
@@ -113,6 +113,10 @@ function resetButtons() {
         button.style.border = '1px solid white';
         top_users.style.border='none';
         boosts_open.style.border='none';
+
+        coin_number.style.fontSize='30px'
+        coin_number.style.marginTop='100px'
+        coin_number.style.zIndex='1'
     });
 }
 
@@ -354,6 +358,10 @@ boosts.addEventListener('click' , () =>{
     earn_open.style.display = 'none'; // Прячем earn_open
     top_users_open.style.display = 'none'; // Прячем top_users_open
     boosts_open.style.display = 'flex'; // Показываем boosts_open
+
+    coin_number.style.fontSize='40px'
+    coin_number.style.marginTop='30px'
+    coin_number.style.zIndex='99'
 })
 
 // Запускаем восстановление count_span каждые 1 секунду
