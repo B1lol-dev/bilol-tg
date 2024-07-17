@@ -1,6 +1,6 @@
 const API_URL = 'https://f0ce305c-4365-4d9e-8d96-80da0b73e5ce-00-rin38d6ff602.sisko.replit.dev';
 
-// const API_URL = 'www' 
+// const API_URL = 'https.b1ldev.api/b1lcoin' 
 
 // Функция для получения имени пользователя из Telegram
 function getTelegramUsername() {
@@ -25,7 +25,7 @@ function loadUserData() {
     .then(response => response.json())
     .then(data => {
         if (data.coin_number !== undefined) {
-            updateCoinNumber(data.coin_number); // Обновляем значение coin_number и boosts_open_balance_h1
+            coin_number.innerText = data.coin_number;
         } else {
             // Создаем нового пользователя, если не найден
             fetch(`${API_URL}/add-user`, {
@@ -37,7 +37,7 @@ function loadUserData() {
             })
             .then(response => response.json())
             .then(() => {
-                updateCoinNumber(0); // Обновляем значение coin_number и boosts_open_balance_h1
+                coin_number.innerText = 0;
             });
         }
     });
@@ -162,9 +162,9 @@ function loadFromLocalStorage() {
     }
 
     if (savedCoin !== null) {
-        updateCoinNumber(savedCoin); // Обновляем значение coin_number и boosts_open_balance_h1
+        coin_number.innerText = savedCoin;
     } else {
-        updateCoinNumber(0); // Начальное значение
+        coin_number.innerText = 0; // Начальное значение
     }
 
     if (savedBonus_span !== null) {
@@ -177,24 +177,6 @@ function loadFromLocalStorage() {
         bonus_span2.innerText = savedBonus_span2;
     } else {
         bonus_span2.innerText = parseInt(bonus_init);
-    }
-
-    if (savedRocketSpan1 !== null) {
-        rocket_span1.innerText = savedRocketSpan1;
-    } else {
-        rocket_span1.innerText = 3; // Начальное значение
-    }
-    
-    if (savedEnergySpan1 !== null) {
-        energy_span1.innerText = savedEnergySpan1;
-    } else {
-        energy_span1.innerText = 3; // Начальное значение
-    }
-    
-    if (savedEnergySpan2 !== null) {
-        energy_span2.innerText = savedEnergySpan2;
-    } else {
-        energy_span2.innerText = 3; // Начальное значение
     }
 
     // Если время последнего выхода доступно, восстанавливаем count_span
@@ -214,7 +196,7 @@ function saveToLocalStorage() {
     localStorage.setItem('bonus_span2', bonus_span2.innerText);
 
     // localStorage.clear();
-
+    
     // Сохраняем текущее время в миллисекундах
     localStorage.setItem(lastExitTimeKey, Date.now().toString());
 }
@@ -270,13 +252,6 @@ function updateBonusRoad() {
         document.querySelector('.bonus_info').style.border = '1px solid white';
         bonus_info_i.style.color = 'white';
     }
-}
-
-// Обработчик клика на main_coin
-// Функция для обновления значения coin_number и boosts_open_balance_h1
-function updateCoinNumber(newCoinNumber) {
-    coin_number.innerText = newCoinNumber;
-    boosts_open_balance_h1.innerText = newCoinNumber; // Обновляем значение в boosts_open_balance_h1
 }
 
 // Обработчик клика на main_coin
@@ -416,7 +391,7 @@ if (tg) {
             restore_amount = 1000;          // Новое значение восстановления каждую секунду
         }
     } else {
-        user_name.innerText = 'User'; // Значение по умолчанию
+        user_name.innerText = 'User-0'; // Значение по умолчанию
     }
 } else {
     console.error('Telegram Web Apps API is not available.');
