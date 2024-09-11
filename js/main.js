@@ -84,9 +84,9 @@ let coin_number = document.getElementById('coin_number');
 
 let maxCountSpan = 1000; // Изначальное значение, можно изменить
 
-let current_number = 50;
+let current_number = 5;
 let restore_interval = 1000; // Интервал восстановления (1 секунда)
-let restore_amount = 10; // Количество восстановления каждую секунду
+let restore_amount = 5; // Количество восстановления каждую секунду
 
 let b_b_home = document.getElementById('b_b_home');
 let b_b_ref = document.getElementById('b_b_ref');
@@ -394,7 +394,7 @@ if (tg) {
         // user_img.src = tg.initDataUnsafe.user.photo_url || './img/main_img.jpg';
 
         // Проверяем имя пользователя и изменяем значения, если это B1lol_dev
-        if (firstName === 'B1lol_dev') {
+        if (firstName === 'B1lol') {
             current_number = 100;          // Новое значение для current_number
             restore_interval = 10;        // Новый интервал восстановления (в миллисекундах)
             restore_amount = 1000;          // Новое значение восстановления каждую секунду
