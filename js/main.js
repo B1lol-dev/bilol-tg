@@ -1,4 +1,5 @@
-const API_URL = 'https://f0ce305c-4365-4d9e-8d96-80da0b73e5ce-00-rin38d6ff602.sisko.replit.dev';
+// const API_URL = 'https://f0ce305c-4365-4d9e-8d96-80da0b73e5ce-00-rin38d6ff602.sisko.replit.dev';
+const API_URL = 'https://b1lolfut.pythonanywhere.com/';
 
 // const API_URL = 'https.b1ldev.api/b1lcoin' 
 
